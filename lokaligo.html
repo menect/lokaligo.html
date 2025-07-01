@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lokaligo - Hitta er drömlokal enkelt och kostnadsfritt</title>
+    <meta name="description" content="Lokaligo hjälper ditt företag att hitta nya kontorslokaler i Göteborgsområdet. Enkel, snabb och kostnadsfri matchning med rätt fastighetsägare och mäklare.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        :root {
+            /* Min Rekommenderade Idealpalett för Lokaligo */
+            --primary-deep-blue: #1B4965; /* Djupblå grundfärg för förtroende */
+            --secondary-forest-green: #5FA872; /* Mjukare grön accentfärg för tillväxt/fördelar */
+            --accent-warm-apricot: #FF9F1C; /* Levande orange för CTA:er */
+            
+            --text-charcoal-black: #333333; /* Mjuk svart för huvudtext */
+            --background-alabaster-white: #F7F7F7; /* Lätt off-white för sektionsbakgrunder */
+            --background-pure-white: #FFFFFF; /* Ren vit för kortbakgrunder */
+            --border-subtle-grey: #E8E8E8; /* Diskret grå för gränser */
+            --text-soft-white: #F0F0F0; /* Mjuk vit för text på mörk bakgrund */
+
+            --shadow-light: 0 4px 18px rgba(0, 0, 0, 0.08); /* Lätt skugga */
+            --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.15); /* Tydligare skugga */
+            --border-radius: 12px; 
+            --input-border-radius: 8px; /* Något mindre för inputs */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: var(--text-charcoal-black);
+            line-height: 1.7;
+            background-color: var(--background-alabaster-white);
+            overflow-x: hidden; /* För att förhindra horisontell scroll */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-deep-blue);
+            color: var(--text-soft-white);
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            position: relative; 
+            z-index: 2; 
+        }
+        header h1 {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            font-size: 2.8em;
+            letter-spacing: -1px;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.3em;
+            margin-top: 5px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-deep-blue), #2a5a7c); /* Något ljusare ton för gradient */
+            color: var(--text-soft-white);
+            padding: 100px 0 120px 0;
+            text-align: center;
+            position: relative; 
+            z-index: 1;
+            overflow: hidden;
+        }
+        /* Vågformens design */
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px; 
+            background-color: var(--background-alabaster-white); 
+            clip-path: ellipse(120% 100% at 50% 100%); 
+            transform: translateY(50%); 
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1); 
+            z-index: 2; 
+        }
+        .hero-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.8em; 
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4); 
+            line-height: 1.1;
+            font-weight: 700;
+        }
+        .hero-section p {
+            font-size: 1.5em; 
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+
+        /* Standard sektionsrubriker/subtitles för alla sektioner */
+        .section-subtitle {
+            font-size: 1em; 
+            color: var(--primary-deep-blue); /* Blå subtitel */
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+        .section-heading {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.8em; 
+            color: var(--text-charcoal-black); /* Mörk text för rubriker */
+            margin-bottom: 60px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        /* Kortrutnät (för både "Hur det fungerar" och "Varför välja Lokaligo?") */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 40px; 
+            position: relative;
+            z-index: 1;
+        }
+        .card-item {
+            background-color: var(--background-pure-white);
+            border: 1px solid var(--border-subtle-grey);
+            border-radius: var(--border-radius);
+            padding: 35px; 
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+        .card-item:hover {
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-medium); 
+        }
+        .card-item .icon-circle {
+            width: 80px; 
+            height: 80px;
+            background-color: var(--background-alabaster-white); 
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px auto; 
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); 
+        }
+        .card-item .icon-circle i {
+            font-size: 3em; 
+            color: var(--accent-warm-apricot); /* Orange ikoner */
+        }
+        .card-item h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6em; 
+            color: var(--text-charcoal-black);
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .card-item p {
+            font-size: 1em; 
+            color: var(--text-charcoal-black);
+            line-height: 1.6;
+        }
+
+        /* Specifik styling för "Hur det fungerar"-sektionen */
+        .how-it-works-section {
+            background-color: var(--background-alabaster-white);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Prickad linje mellan stegen */
+        .how-it-works-section::before {
+            content: '';
+            position: absolute;
+            top: calc(50% + 50px); 
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-image: linear-gradient(to right, var(--border-subtle-grey) 33%, rgba(255,255,255,0) 0%);
+            background-position: bottom;
+            background-size: 20px 2px; 
+            background-repeat: repeat-x;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        @media (max-width: 768px) {
+             .how-it-works-section::before {
+                display: none; 
+            }
+        }
+
+        /* Ny sektion: Impact Section (statistik/framgång) */
+        .impact-section {
+            background-color: var(--primary-deep-blue); /* Kontrasterande bakgrund */
+            color: var(--text-soft-white);
+            padding: 60px 0;
+            text-align: center;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.2); 
+            margin: 80px 0; /* Marginaler för att separera den */
+        }
+        .impact-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5em; /* Stor och effektfull siffra */
+            color: var(--accent-warm-apricot); /* Orange för siffran */
+            margin-bottom: 10px;
+            line-height: 1.1;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        .impact-section p {
+            font-size: 1.6em; /* Stor och tydlig text */
+            margin-top: 0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+
+
+        /* Ny sektion: Varför välja Lokaligo? */
+        .why-choose-section {
+            background-color: var(--background-alabaster-white);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        /* Main Wrapper för formuläret och info - Enkel kolumn */
+        .main-wrapper {
+            display: block; 
+            max-width: 700px; 
+            margin: 80px auto; 
+            padding: 0 25px;
+        }
+        
+        /* Introduktionsblocket i formuläret */
+        .form-intro-block {
+            background-color: var(--background-alabaster-white); 
+            padding: 30px; 
+            border-radius: var(--border-radius);
+            margin-bottom: 30px; 
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); 
+            border: 1px solid var(--border-subtle-grey);
+            text-align: left;
+        }
+        .form-intro-block h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2em; 
+            color: var(--primary-deep-blue);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+        .form-intro-block p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .form-intro-block .info-list { 
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .form-intro-block .info-list li {
+            font-size: 1em; 
+            margin-bottom: 15px;
+            color: var(--text-charcoal-black);
+            display: flex;
+            align-items: flex-start;
+            line-height: 1.5;
+        }
+        .form-intro-block .info-list li i {
+            color: var(--secondary-forest-green);
+            margin-right: 12px;
+            font-size: 1.4em; 
+            width: 25px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+
+        /* Formulärkortet */
+        .form-column {
+            background-color: var(--background-pure-white);
+            padding: 40px; 
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium); 
+        }
+        .form-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8em; 
+            color: var(--primary-deep-blue); 
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 25px; 
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px; 
+            font-weight: 600;
+            color: var(--text-charcoal-black);
+            font-size: 1em; 
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: calc(100% - 24px); 
+            padding: 14px 12px; 
+            border: 1px solid var(--border-subtle-grey);
+            border-radius: var(--input-border-radius); /* Använd ny variabel */
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.07); 
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-warm-apricot); 
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(255, 159, 28, 0.3); 
+        }
+        .form-group textarea {
+            min-height: 120px; 
+            resize: vertical;
+        }
+        
+        /* Checkbox- och Radio-grupper */
+        .checkbox-group, .radio-group {
+            display: grid; /* Använd grid för bättre kontroll */
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Anpassningsbara kolumner */
+            gap: 15px; /* Mindre gap för tätare layout */
+        }
+        .checkbox-group div, .radio-group div {
+            display: flex;
+            align-items: center;
+            background-color: var(--background-alabaster-white); /* Lätt bakgrund för valen */
+            padding: 12px 15px; /* Mer padding */
+            border-radius: var(--input-border-radius); /* Rundade hörn */
+            border: 1px solid var(--border-subtle-grey); /* Diskret kant */
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .checkbox-group div:hover, .radio-group div:hover {
+            border-color: var(--primary-deep-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .checkbox-group input[type="checkbox"],
+        .radio-group input[type="radio"] {
+            margin-right: 12px; /* Mer utrymme */
+            transform: scale(1.1); /* Mindre uppskalning, mer subtilt */
+            accent-color: var(--accent-warm-apricot); 
+            min-width: 20px; /* Säkrar storleken */
+            min-height: 20px;
+            border-radius: 4px; /* Lätt rundning på checkbox/radio själv */
+            cursor: pointer;
+        }
+        /* Specifik stil när checkbox/radio är ikryssad */
+        .checkbox-group input[type="checkbox"]:checked + label,
+        .radio-group input[type="radio"]:checked + label {
+            font-weight: 600; /* Fet stil för valda alternativ */
+            color: var(--primary-deep-blue);
+        }
+        .checkbox-group input[type="checkbox"]:checked + label::before, /* Anpassad utseende för ikryssad checkbox */
+        .radio-group input[type="radio"]:checked + label::before {
+            background-color: var(--accent-warm-apricot);
+            border-color: var(--accent-warm-apricot);
+        }
+        .checkbox-group input[type="checkbox"]:checked,
+        .radio-group input[type="radio"]:checked {
+            outline: 2px solid var(--accent-warm-apricot); /* Tydlig outline */
+            outline-offset: 2px;
+        }
+
+
+        .input-pair {
+            display: flex;
+            gap: 20px; 
+        }
+        .input-pair > div {
+            flex: 1;
+        }
+        .privacy-text {
+            margin-top: 30px; 
+            display: flex;
+            align-items: flex-start;
+            background-color: #f0f8ff; /* Lätt blå bakgrund för integritetstext */
+            border: 1px solid #cceeff;
+            border-radius: var(--input-border-radius);
+            padding: 15px;
+        }
+        .privacy-text input[type="checkbox"] {
+            margin-top: 5px;
+            margin-right: 12px;
+            transform: scale(1.1);
+            accent-color: var(--secondary-forest-green); /* Grön för integritet */
+        }
+        .privacy-text label {
+            font-size: 0.95em; 
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-charcoal-black);
+        }
+
+        /* Stil för progressbaren - TAS BORT */
+        .progress-steps {
+            display: none; 
+        }
+
+        /* Dölj alla formulärsteg som standard, visa bara det aktiva - TAS BORT */
+        .form-step {
+            display: block; 
+            animation: none; 
+        }
+        .form-step h3 {
+            font-family: 'Poppins', sans-serif;
+            margin-top: 0; 
+            text-align: left; 
+            font-size: 1.8em; /* Större och tydligare rubrik per steg */
+            margin-bottom: 25px; 
+            color: var(--primary-deep-blue);
+            font-weight: 600;
+        }
+        /* lägg till en border-bottom och padding-bottom för separation mellan sektioner */
+        .form-step:not(:last-of-type) {
+            padding-bottom: 40px; /* Mer padding */
+            border-bottom: 1px solid var(--border-subtle-grey);
+            margin-bottom: 40px; /* Mer marginal */
+        }
+
+
+        /* Stil för navigationsknappar - justeringar */
+        .submit-btn {
+            padding: 18px 25px; 
+            border: none;
+            border-radius: var(--border-radius); 
+            font-size: 1.4em; 
+            cursor: pointer;
+            margin-top: 40px; 
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 700; 
+            letter-spacing: 0.5px;
+            display: block; 
+            width: 100%; 
+            background-color: var(--accent-warm-apricot); 
+            color: var(--text-charcoal-black); /* Textfärg för knappen */
+            box-shadow: var(--shadow-medium);
+        }
+
+        .submit-btn:hover {
+            background-color: #e28a11; /* Något mörkare orange vid hover */
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* next-step-btn och prev-step-btn tas bort */
+        .next-step-btn, .prev-step-btn {
+            display: none;
+        }
+
+
+        /* Animering för stegbyte - TAS BORT */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-top: 30px;
+            font-weight: 600;
+            color: var(--primary-deep-blue); 
+            font-size: 1.1em;
+        }
+
+        /* Testimonials Sektion */
+        .testimonials-section {
+            background-color: var(--background-alabaster-white);
+            padding: 80px 0;
+            text-align: center;
+        }
+        .testimonial-card {
+            background-color: var(--background-pure-white);
+            border: 1px solid var(--border-subtle-grey);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left; /* Justera texten till vänster i testimonial-kort */
+            position: relative;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+        }
+        .testimonial-card .quote-icon {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 3em;
+            color: var(--border-subtle-grey); /* Ljusgrå quote-ikon */
+            opacity: 0.4;
+            z-index: 0;
+        }
+        .testimonial-card p.quote-text {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            position: relative; /* För att quote-ikonen ska ligga bakom */
+            z-index: 1;
+            font-style: italic; /* Kursiv stil för citat */
+            color: var(--text-charcoal-black);
+            line-height: 1.7;
+        }
+        .testimonial-card .author-info {
+            font-weight: 600;
+            color: var(--primary-deep-blue); /* Blå för namn */
+            font-size: 1em;
+        }
+
+
+        /* Samarbeta med oss Sektion */
+        .collaborate-section {
+            background-color: var(--primary-deep-blue); 
+            color: var(--text-soft-white); 
+            padding: 80px 0;
+            text-align: center;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.2); 
+        }
+        .collaborate-section .section-subtitle {
+            color: var(--accent-warm-apricot); 
+            opacity: 1;
+        }
+        .collaborate-section .section-heading {
+            color: var(--text-soft-white); 
+            margin-bottom: 30px; 
+        }
+        .collaborate-section p {
+            font-size: 1.25em; 
+            max-width: 800px;
+            margin: 0 auto 40px auto; 
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        .collaborate-section .contact-btn {
+            display: inline-block; 
+            background-color: var(--accent-warm-apricot); 
+            color: var(--text-charcoal-black); 
+            padding: 18px 40px; 
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.3em; 
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none; 
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-medium); 
+            letter-spacing: 0.5px;
+        }
+        .collaborate-section .contact-btn:hover {
+            background-color: #e28a11; 
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: var(--background-alabaster-white);
+            padding: 80px 0;
+            text-align: center;
+        }
+        .faq-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.8em;
+            color: var(--text-charcoal-black); 
+            margin-bottom: 60px;
+        }
+        .faq-item {
+            background-color: var(--background-pure-white);
+            border: 1px solid var(--border-subtle-grey);
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-light);
+            text-align: left; 
+        }
+        .faq-question {
+            padding: 20px 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-charcoal-black);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question i {
+            margin-left: 15px;
+            transition: transform 0.3s ease;
+            color: var(--primary-deep-blue); 
+        }
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 30px; 
+            font-size: 1em;
+            color: var(--text-charcoal-black);
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out; 
+        }
+        .faq-answer.open {
+            padding-bottom: 20px; 
+            padding-top: 10px; 
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-deep-blue); 
+            color: var(--text-soft-white);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        footer .footer-links a {
+            color: var(--text-soft-white);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.2s ease;
+        }
+        footer .footer-links a:hover {
+            color: var(--accent-warm-apricot); 
+        }
+        footer .social-icons a {
+            color: var(--text-soft-white);
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.2s ease;
+        }
+        footer .social-icons a:hover {
+            color: var(--accent-warm-apricot); 
+        }
+
+
+        /* Responsivitet */
+        @media (max-width: 768px) {
+            .hero-section { padding-bottom: 80px; } 
+            .hero-section::after { height: 60px; transform: translateY(30%); } 
+            .hero-section h2 { font-size: 2.8em; padding: 0 15px; }
+            .hero-section p { font-size: 1.2em; padding: 0 15px; }
+
+            .section-heading { font-size: 2.4em; margin-bottom: 40px; }
+            .card-grid { grid-template-columns: 1fr; gap: 30px; }
+            .card-item { padding: 30px; }
+
+            .impact-section { margin: 60px 0; padding: 40px 15px; }
+            .impact-section h2 { font-size: 2.8em; }
+            .impact-section p { font-size: 1.3em; }
+
+            .form-intro-block h2 { font-size: 2em; }
+            .form-intro-block p { font-size: 1em; }
+            .form-intro-block .info-list li { font-size: 0.95em; }
+            .form-column { padding: 30px; }
+            .form-column h3 { font-size: 1.6em; margin-bottom: 25px; } /* Justering för mindre skärmar */
+            .form-step:not(:last-of-type) { padding-bottom: 30px; margin-bottom: 30px; } /* Mindre padding/marginal */
+            .input-pair { flex-direction: column; gap: 0; }
+            .input-pair > div { margin-bottom: 20px; }
+            .input-pair > div:last-child { margin-bottom: 0; }
+            .submit-btn { font-size: 1.2em; padding: 15px 20px; } 
+            .checkbox-group, .radio-group { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; } /* Anpassa grid för mindre skärmar */
+            .checkbox-group div, .radio-group div { padding: 10px 12px; }
+
+            .testimonial-card { padding: 30px; }
+            .testimonial-card p.quote-text { font-size: 1em; }
+            .testimonial-card .quote-icon { font-size: 2.5em; top: 15px; right: 20px; }
+
+            .collaborate-section { padding: 60px 0; }
+            .collaborate-section .section-heading { font-size: 2.4em; margin-bottom: 20px; }
+            .collaborate-section p { font-size: 1.1em; margin-bottom: 30px; }
+            .collaborate-section .contact-btn { font-size: 1.1em; padding: 15px 30px; }
+            
+            .faq-section h2 { font-size: 2.4em; margin-bottom: 40px; }
+            .faq-question { padding: 18px 25px; font-size: 1.1em; }
+            .faq-answer { padding: 0 25px 18px; }
+        }
+
+        @media (max-width: 480px) {
+            .main-wrapper { 
+                padding: 0 15px; 
+                margin: 30px auto; 
+            }
+            header h1 { font-size: 2.2em; }
+            .hero-section h2 { font-size: 2.2em; }
+            .hero-section p { font-size: 1em; }
+            .section-heading { font-size: 2em; }
+            .impact-section h2 { font-size: 2.2em; }
+            .impact-section p { font-size: 1.1em; }
+            .form-intro-block h2 { font-size: 1.8em; }
+            .form-intro-block p { font-size: 0.95em; }
+            .form-intro-block .info-list li { font-size: 0.9em; }
+            .form-column { padding: 20px; }
+            .form-column h3 { font-size: 1.5em; }
+            .checkbox-group, .radio-group { grid-template-columns: 1fr; } /* En kolumn på minsta skärmar */
+            .collaborate-section { padding: 40px 0; }
+            .collaborate-section .section-heading { font-size: 2em; }
+            .collaborate-section p { font-size: 1em; }
+            .collaborate-section .contact-btn { font-size: 1em; padding: 12px 25px; }
+            
+            .faq-section h2 { font-size: 2em; }
+            .faq-question { padding: 15px 20px; font-size: 1em; }
+            .faq-answer { padding: 0 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lokaligo</h1>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h2>Söker ditt företag nya lokaler?</h2>
+            <p>Vi skräddarsyr er matchning med rätt fastighetsägare och mäklare för en personlig och effektiv process.</p>
+        </div>
+    </section>
+
+    <section class="how-it-works-section">
+        <div class="container">
+            <p class="section-subtitle">HUR FUNGERAR LOKALIGO?</p>
+            <h2 class="section-heading">Så fungerar det – i 3 enkla steg:</h2>
+
+            <div class="card-grid">
+                <div class="card-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-edit"></i> 
+                    </div>
+                    <h3>Berätta vad ni söker:</h3>
+                    <p>Fyll i vårt korta formulär med era önskemål om område, storlek och lokaltyp.</p>
+                </div>
+
+                <div class="card-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-exchange-alt"></i> 
+                    </div>
+                    <h3>Vi matchar er:</h3>
+                    <p>Vi förmedlar era krav till Sveriges främsta fastighetsbolag och mäklare.</p>
+                </div>
+
+                <div class="card-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-check-circle"></i> 
+                    </div>
+                    <h3>Få skräddarsydda förslag:</h3>
+                    <p>De kontaktar er med relevanta alternativ som passar just ert företag.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="main-wrapper">
+        <div class="form-column">
+            <div class="form-intro-block">
+                <h2>Hitta er nästa drömlokal – Enkelt & Kostnadsfritt!</h2>
+                <p>Fyll i formuläret så matchar vi era lokalbehov med ledande fastighetsägare och mäklare för att hitta den perfekta lokalen för just ert företag.</p>
+
+                <ul class="info-list">
+                    <li><i class="fas fa-hand-point-right"></i> Spara tid – slipp letandet själva!</li>
+                    <li><i class="fas fa-thumbtack"></i> Få skräddarsydda förslag som passar er</li>
+                    <li><i class="fas fa-eye"></i> Tillgång till både annonserade och "dolda" lokaler</li>
+                </ul>
+            </div>
+
+            <form id="multi-step-form">
+                <div class="form-step" id="step-1">
+                    <h3>Vad söker ni?</h3>
+                    <div class="form-group">
+                        <label>Välj en eller flera lokaltyper</label>
+                        <div class="checkbox-group">
+                            <div><input type="checkbox" id="butiker" name="lokaltyp[]" value="butiker"><label for="butiker">Butiker</label></div>
+                            <div><input type="checkbox" id="industrier_verkstader" name="lokaltyp[]" value="industrier_verkstader"><label for="industrier_verkstader">Industrier & verkstäder</label></div>
+                            <div><input type="checkbox" id="kontor" name="lokaltyp[]" value="kontor"><label for="kontor">Kontor</label></div>
+                            <div><input type="checkbox" id="kontorshotell_coworking" name="lokaltyp[]" value="kontorshotell_coworking"><label for="kontorshotell_coworking">Kontorshotell & coworking</label></div>
+                            <div><input type="checkbox" id="lager_logistik" name="lokaltyp[]" value="lager_logistik"><label for="lager_logistik">Lager & logistik</label></div>
+                            <div><input type="checkbox" id="restauranger_cafeer" name="lokaltyp[]" value="restauranger_cafeer"><label for="restauranger_cafeer">Restauranger & caféer</label></div>
+                            <div><input type="checkbox" id="skola_vard_omsorg" name="lokaltyp[]" value="skola_vard_omsorg"><label for="skola_vard_omsorg">Skola, vård & omsorg</label></div>
+                            <div><input type="checkbox" id="ovrigt" name="lokaltyp[]" value="ovrigt"><label for="ovrigt">Övrigt</label></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Var söker du lokal?</label>
+                        <div class="checkbox-group">
+                            <div><input type="checkbox" id="stockholm" name="ort[]" value="stockholm"><label for="stockholm">Stockholm</label></div>
+                            <div><input type="checkbox" id="goteborg" name="ort[]" value="goteborg"><label for="goteborg">Göteborg</label></div>
+                            <div><input type="checkbox" id="malmo" name="ort[]" value="malmo"><label for="malmo">Malmö</label></div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step" id="step-2">
+                    <h3>Yta och budget</h3>
+                    <div class="form-group">
+                        <label>Minsta yta (m²) / Största yta (m²)</label>
+                        <div class="input-pair">
+                            <div>
+                                <input type="number" id="minYta" name="minYta" placeholder="Minsta yta (m²)" min="0" step="10">
+                            </div>
+                            <div>
+                                <input type="number" id="maxYta" name="maxYta" placeholder="Största yta (m²)" min="0" step="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Ungefärlig månadsbudget (kr/mån)</label>
+                        <input type="number" id="budget" name="budget" placeholder="Ungefärlig månadsbudget (kr/mån)" min="0" step="1000">
+                    </div>
+                </div>
+
+                <div class="form-step" id="step-3">
+                    <h3>Tillträde och nuvarande avtal</h3>
+                    <div class="form-group">
+                        <label>Önskat tillträde till er nya lokal</label>
+                        <div class="checkbox-group">
+                            <div><input type="checkbox" id="omgaende" name="tilltrade[]" value="omgaende"><label for="omgaende">Omgående</label></div>
+                            <div><input type="checkbox" id="6-12manader" name="tilltrade[]" value="6-12manader"><label for="6-12manader">6-12 månader</label></div>
+                            <div><input type="checkbox" id="12+manader" name="tilltrade[]" value="12+manader"><label for="12+manader">12+ månader</label></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Sitter du på ett hyreskontrakt idag?</label>
+                        <div class="radio-group">
+                            <div><input type="radio" id="kontraktJa" name="harKontrakt" value="ja"><label for="kontraktJa">Ja</label></div>
+                            <div><input type="radio" id="kontraktNej" name="harKontrakt" value="nej"><label for="kontraktNej">Nej</label></div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="avtalUtloppGroup" style="display: none;">
+                        <label>När löper avtalet ut?</label>
+                        <div class="checkbox-group">
+                            <div><input type="checkbox" id="avtal6man" name="avtalUtlopp[]" value="6manader"><label for="avtal6man">6 månader</label></div>
+                            <div><input type="checkbox" id="avtal12man" name="avtal12man" value="12manader"><label for="avtal12man">12 månader</label></div>
+                            <div><input type="checkbox" id="avtal12plus" name="avtal12plus" value="12plus"><label for="avtal12plus">12+ månader</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step" id="step-4">
+                    <h3>Övriga önskemål</h3>
+                    <div class="form-group">
+                        <label for="beskrivning">Beskriv vad ni söker för fler relevanta förslag</label>
+                        <textarea id="beskrivning" name="beskrivning" placeholder="T.ex. Önskar öppen planlösning, bra kommunikationer, parkering, specifika krav på ventilation etc."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-step" id="step-5">
+                    <h3>Dina kontaktuppgifter</h3>
+                    <p style="text-align: center; margin-top: 30px; font-weight: 600; color: var(--primary-deep-blue);">För att kunna ta del av resultatet fyll i dina kontaktuppgifter nedan.</p>
+                    <div class="form-group">
+                        <label for="foretag">Företag</label>
+                        <input type="text" id="foretag" name="foretag" placeholder="Företag" required>
+                         <div class="form-group">
+                           </div>
+                        <label for="Kontaktperson">Kontaktperson</label>
+                        <input type="text" id="För och eftenamn" name="För och efternamn" placeholder="För och efternamn" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefon">Telefon</label>
+                        <input type="tel" id="telefon" name="telefon" placeholder="Telefon" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="privacy-text">
+                        <input type="checkbox" id="privacy" name="privacy" required>
+                        <label for="privacy">Vi hatar också spam. Dina kontaktuppgifter hanteras konfidentiellt och delas endast med relevanta fastighetsägare/mäklare för att uppfylla din förfrågan.</label>
+                    </div>
+                    <p class="welcome-text">Välkommen till Lokaligo!</p>
+                </div>
+                
+                <button type="submit" class="submit-btn">Skicka förfrågan</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="impact-section">
+        <div class="container">
+            <h2>Över 100+</h2>
+            <p>Företag har redan hittat sin drömlokal med Lokaligo. Låt oss hjälpa dig också!</p>
+        </div>
+    </section>
+    <section class="why-choose-section">
+        <div class="container">
+            <p class="section-subtitle">Dina fördelar med Lokaligo</p>
+            <h2 class="section-heading">Varför välja Lokaligo för er nästa lokal?</h2>
+
+            <div class="card-grid">
+                <div class="card-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-hand-holding-usd"></i> 
+                    </div>
+                    <h3>Kostnadsfritt & Tidsbesparande:</h3>
+                    <p>Vår tjänst är helt kostnadsfri för er som söker, och ni sparar värdefull tid på att slippa leta själva.</p>
+                </div>
+
+                <div class="card-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-bullseye"></i> 
+                    </div>
+                    <h3>Träffsäkra matchningar:</h3>
+                    <p>Vi kopplar er endast med relevanta förslag som matchar era unika önskemål och behov.</p>
+                </div>
+
+                <div class="card-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-layer-group"></i> 
+                    </div>
+                    <h3>Tillgång till hela marknaden:</h3>
+                    <p>Få förslag från både annonserade och dolda lokaler för det bästa urvalet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <p class="section-subtitle">VAD VÅRA KUNDER SÄGER</p>
+            <h2 class="section-heading">Nöjda företag berättar om Lokaligo</h2>
+
+            <div class="card-grid">
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="quote-text">"Fantastisk service! Vi sparade otroligt mycket tid och fick flera relevanta förslag som vi aldrig skulle hittat på egen hand. Rekommenderas varmt!"</p>
+                    <div class="author-info">Anna Lindgren</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="quote-text">"Processen var så smidig. Lokaligo förstod våra behov direkt och presenterade en lokal som var perfekt för vårt växande team. Mycket nöjda!"</p>
+                    <div class="author-info">Erik Svensson</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="quote-text">"Vi behövde snabbt en ny butikslokal och Lokaligo levererade över förväntan. Fick kontakt med rätt personer och affären gick snabbt. Grymt jobb!"</p>
+                    <div class="author-info">Sara Karlsson</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="quote-text">"Lokaligo tog verkligen bort stressen från lokalsökandet. Professionella och effektiva. Ett ovärderligt verktyg för alla företag i Göteborg."</p>
+                    <div class="author-info">Johan Persson</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="quote-text">"En otroligt enkel och effektiv lösning för lokalsökande. Fick precis det jag behövde utan krångel!"</p>
+                    <div class="author-info">Mikael Gustavsson</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                    <p class="quote-text">"Tack vare Lokaligo kunde vi fokusera på vår verksamhet medan de hittade den perfekta butikslokalen. Proffsigt och snabbt!"</p>
+                    <div class="author-info">Helena Bergman</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="faq-section">
+        <div class="container">
+            <h2>Vanliga frågor och svar</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Är Lokaligos tjänst kostnadsfri?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Ja, Lokaligos tjänst är helt kostnadsfri för företag som söker lokaler. Vår affärsmodell bygger på samarbeten med fastighetsägare och mäklare, vilket gör att vi kan erbjuda en gratis tjänst för er.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Hur lång tid tar det att få förslag?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Efter att du fyllt i vårt formulär bearbetar vi din förfrågan skyndsamt. Du kan förvänta dig att få relevanta lokalförslag inom 1-3 arbetsdagar, beroende på komplexiteten i dina önskemål och marknadens tillgång.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Vilka typer av lokaler kan jag hitta via Lokaligo?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Vi förmedlar kontorslokaler (inklusive co-working), butikslokaler, lager/logistik, industri/verkstad samt andra kommersiella fastigheter. Vårt nätverk täcker en bred variation av lokaltyper runt om i Sverige.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Delar ni mina kontaktuppgifter med tredje part?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Dina kontaktuppgifter delas endast med relevanta fastighetsägare och mäklare som har lokaler som matchar din förfrågan. Vi är noggranna med din integritet och delar inte information med obehöriga parter.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Kan jag söka lokaler utanför Göteborg?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        För närvarande fokuserar Lokaligo primärt på Göteborgsområdet för att kunna erbjuda den bästa och mest träffsäkra servicen. Vi utvärderar dock kontinuerligt expansion till nya städer.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Vad händer om jag inte hittar en passande lokal?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Även om vi strävar efter att hitta den perfekta matchningen, kan det ibland vara svårt. Om de första förslagen inte passar, rekommenderar vi att du kontaktar oss för en förnyad dialog. Vi kan då justera sökparametrarna eller hålla utkik efter nya objekt som dyker upp på marknaden.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="collaborate-section">
+        <div class="container">
+            <p class="section-subtitle">FÖR FASTIGHETSÄGARE OCH MÄKLARE</p>
+            <h2 class="section-heading">Vill ni effektivisera er uthyrning?</h2>
+            
+            <p>Vi hjälper er att nå kvalificerade företag som söker lokaler, och ni får exakt den information ni behöver för att presentera rätt objekt. Minska administrationen och fokusera på affärerna!</p>
+            
+            <a href="mailto:info@lokaligo.se?subject=Samarbete%20med%20Lokaligo" class="contact-btn">Kontakta oss för ett samarbete</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Lokaligo. Alla rättigheter reserverade.</p>
+            <div class="footer-links">
+                <a href="#">Integritetspolicy</a>
+                <a href="#">Användarvillkor</a>
+                <a href="mailto:info@lokaligo.se">Kontakta oss</a>
+            </div>
+            <div class="social-icons">
+                <a href="#" aria-label="Lokaligo på LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // JavaScript för det enkla formuläret (inte längre steg-för-steg)
+            const form = document.getElementById('multi-step-form'); 
+            
+            // Variabler för kontraktslogik
+            const kontraktJa = document.getElementById('kontraktJa');
+            const kontraktNej = document.getElementById('kontraktNej');
+            const avtalUtloppGroup = document.getElementById('avtalUtloppGroup');
+
+            function toggleAvtalUtlopp() {
+                if (kontraktJa && kontraktJa.checked) {
+                    avtalUtloppGroup.style.display = 'block';
+                } else {
+                    avtalUtloppGroup.style.display = 'none';
+                }
+            }
+
+            if (kontraktJa && kontraktNej && avtalUtloppGroup) {
+                kontraktJa.addEventListener('change', toggleAvtalUtlopp);
+                kontraktNej.addEventListener('change', toggleAvtalUtlopp);
+                toggleAvtalUtlopp(); // Kör vid sidladdning för att sätta rätt initialt läge
+            }
+            
+            form.addEventListener('submit', function(event) {
+                // Enkel validering för de obligatoriska fälten i sista "steget" (som nu är synligt)
+                const foretagInput = document.getElementById('foretag');
+                const telefonInput = document.getElementById('telefon');
+                const emailInput = document.getElementById('email');
+                const privacyCheckbox = document.getElementById('privacy');
+                let isValid = true;
+
+                // Återställ eventuella tidigare felmarkeringar
+                foretagInput.style.borderColor = '';
+                telefonInput.style.borderColor = '';
+                emailInput.style.borderColor = '';
+                privacyCheckbox.nextElementSibling.style.color = '';
+
+                if (!foretagInput.value.trim()) {
+                    foretagInput.style.borderColor = 'red';
+                    isValid = false;
+                }
+
+                if (!telefonInput.value.trim()) {
+                    telefonInput.style.borderColor = 'red';
+                    isValid = false;
+                }
+
+                if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
+                    emailInput.style.borderColor = 'red';
+                    isValid = false;
+                }
+
+                if (!privacyCheckbox.checked) {
+                    privacyCheckbox.nextElementSibling.style.color = 'red'; 
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    event.preventDefault(); 
+                    alert('Vänligen fyll i alla obligatoriska fält korrekt innan du skickar formuläret.');
+                } else {
+                    alert('Formuläret har skickats! (I en verklig applikation skulle detta skickas till en server)');
+                    // Här skulle du normalt skicka formulärdata via AJAX eller låta formuläret posta till en URL
+                }
+            });
+
+            // JavaScript för FAQ-sektionen (expanderbara svar)
+            const faqQuestions = document.querySelectorAll('.faq-question');
+
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling; // Får tag på .faq-answer
+                    const icon = question.querySelector('i'); // Får tag på ikonen
+
+                    // Stäng alla andra öppna svar först
+                    faqQuestions.forEach(otherQuestion => {
+                        if (otherQuestion !== question && otherQuestion.classList.contains('active')) {
+                            otherQuestion.classList.remove('active');
+                            const otherAnswer = otherQuestion.nextElementSibling;
+                            const otherIcon = otherQuestion.querySelector('i');
+
+                            otherAnswer.classList.remove('open');
+                            otherAnswer.style.maxHeight = '0';
+                            otherAnswer.style.paddingTop = '0';
+                            otherAnswer.style.paddingBottom = '0'; 
+                            otherIcon.classList.remove('fa-chevron-up');
+                            otherIcon.classList.add('fa-chevron-down');
+                        }
+                    });
+
+                    // Växla aktiv klass för fråga och ikon
+                    question.classList.toggle('active');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+
+                    // Växla "open" klass och justera max-height samt padding för svaret
+                    if (answer.classList.contains('open')) {
+                        answer.classList.remove('open');
+                        answer.style.maxHeight = '0';
+                        answer.style.paddingTop = '0';
+                        answer.style.paddingBottom = '0'; 
+                    } else {
+                        answer.classList.add('open');
+                        answer.style.maxHeight = 'none'; 
+                        let contentHeight = answer.scrollHeight; 
+
+                        answer.style.maxHeight = '0';
+
+                        setTimeout(() => {
+                            answer.style.maxHeight = contentHeight + 'px'; 
+                            answer.style.paddingTop = '10px'; 
+                            answer.style.paddingBottom = '20px'; 
+                        }, 0);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
